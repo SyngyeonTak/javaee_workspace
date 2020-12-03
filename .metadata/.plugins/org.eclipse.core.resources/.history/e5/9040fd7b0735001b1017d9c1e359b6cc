@@ -1,0 +1,18 @@
+package board.gui;
+
+import javax.swing.JFrame;
+
+public class BoardMain extends JFrame{
+	//사용할 페이지 구성
+	Page[] pageList = new Page[Pages.values().length];//enum에 등록된 페이지 만큼 생성
+	
+	public BoardMain() {
+		setSize(900, 700);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	public static void main(String[] args) {
+		new BoardMain();
+	}
+}

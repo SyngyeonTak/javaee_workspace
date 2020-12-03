@@ -1,0 +1,10 @@
+package board.model;
+
+public class Notice {
+	private int notice_id;
+	private String author;
+	private String title;
+	private String content;
+	private int hit;
+	private String regdate;
+}

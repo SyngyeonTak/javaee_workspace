@@ -1,0 +1,9 @@
+/*게시판 목록 페이지*/
+package board.gui;
+
+public class BoardList extends Page{
+	
+	public BoardList(BoardMain boardMain) {
+		super(boardMain);
+	}
+}

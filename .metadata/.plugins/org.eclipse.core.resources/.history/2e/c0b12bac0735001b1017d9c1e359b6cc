@@ -1,0 +1,16 @@
+package board.gui;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class BoardWrite extends Page{
+	JTextField t_title;
+	JTextField t_author;
+	JTextArea area;
+	JScrollPane scroll;
+	
+	public BoardWrite(BoardMain boardMain) {
+		super(boardMain);
+	}
+}

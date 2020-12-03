@@ -1,0 +1,6 @@
+package board.gui;
+
+public class Snippet {
+	BoardMain boardMain
+}
+

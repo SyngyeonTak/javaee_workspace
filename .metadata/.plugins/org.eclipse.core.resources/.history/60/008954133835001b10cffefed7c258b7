@@ -1,0 +1,54 @@
+/*게시판 목록 페이지*/
+package board.gui;
+
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+import board.model.NoticeDAO;
+
+public class BoardList extends Page{
+	JTable table;
+	JScrollPane scroll;
+	JButton bt;//글쓰기 폼 이동 버튼
+	BoardModel model;
+	NoticeDAO noticeDAO; 
+	
+	public BoardList(BoardMain boardMain) {
+		super(boardMain);
+		//생성
+		table = new JTable(model = new BoardModel());//jtable과 모델 객체와의 연결!!
+		scroll = new JScrollPane(table);
+		bt = new JButton("글 등록");
+		//스타일
+		scroll.setPreferredSize(new Dimension((int)this.getPreferredSize().getWidth(), 600));
+		
+		//조립
+		add(scroll);
+		add(bt);
+		
+		getList();
+		table.updateUI();
+		
+		bt.addActionListener((e)->{
+			boardMain.showPage(Pages.valueOf("BoardWrite").ordinal());
+		});
+	}
+	
+	//DAO를 이용하여 데이터 가져오기!!
+	public void getList() {
+		
+	}
+	
+}
+
+
+
+
+
+
+
+

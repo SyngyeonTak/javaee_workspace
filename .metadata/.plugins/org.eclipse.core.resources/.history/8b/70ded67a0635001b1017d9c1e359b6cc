@@ -1,0 +1,8 @@
+package board.gui;
+
+public class BoardList extends Page{
+	
+	public BoardList(BoardMain boardMain) {
+		super(boardMain);
+	}
+}

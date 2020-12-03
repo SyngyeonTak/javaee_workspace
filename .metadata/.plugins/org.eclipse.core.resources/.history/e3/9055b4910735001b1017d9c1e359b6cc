@@ -1,0 +1,7 @@
+package board.gui;
+
+public class BoardWrite extends Page{
+	public BoardWrite(BoardMain boardMain) {
+		super(boardMain)
+	}
+}

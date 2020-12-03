@@ -1,0 +1,19 @@
+package board.gui;
+
+import javax.swing.table.AbstractTableModel;
+
+public class BoardModel extends AbstractTableModel{
+
+	public int getRowCount() {
+		return 5;
+	}
+
+	public int getColumnCount() {
+		return 2;
+	}
+
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return "æ÷»£";
+	}
+
+}

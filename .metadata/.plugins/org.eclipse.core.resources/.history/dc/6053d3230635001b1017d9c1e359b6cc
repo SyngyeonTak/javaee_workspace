@@ -1,0 +1,9 @@
+package board.gui;
+
+import javax.swing.JFrame;
+
+public class BoardMain extends JFrame{
+	public static void main(String[] args) {
+		
+	}
+}
