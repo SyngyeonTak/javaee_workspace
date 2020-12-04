@@ -50,17 +50,23 @@ public class BoardContent extends Page{
 		add(bt_del);
 		
 		bt_list.addActionListener((e)->{
+			BoardList boardList = (BoardList)boardMain.pageList[Pages.valueOf("BoardList").ordinal()];
+			boardList.getList();
 			boardMain.showPage(Pages.valueOf("BoardList").ordinal());
 			
 		});
 		
 		bt_del.addActionListener((e)->{
-			delete();
+			if(JOptionPane.showConfirmDialog(BoardContent.this, "삭제하실래요?")==JOptionPane.OK_OPTION) {
+				delete();
+			}
 			
 		});
 		
 		bt_edit.addActionListener((e)->{
-			update();
+			if(JOptionPane.showConfirmDialog(BoardContent.this, "수정하실래요?")==JOptionPane.OK_OPTION) {
+				update();				
+			}
 		});
 		
 	}
@@ -73,6 +79,7 @@ public class BoardContent extends Page{
 		t_author.setText(notice.getAuthor());
 		t_title.setText(notice.getTitle());
 		area.setText(notice.getContent());
+		noticeDAO.select(notice.getNotice_id());
 	}
 	
 	public void delete() {

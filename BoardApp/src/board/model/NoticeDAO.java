@@ -63,6 +63,7 @@ public class NoticeDAO {
 				notice.setTitle(rs.getString("title"));
 				notice.setContent(rs.getString("Content"));
 				notice.setRegdate(rs.getString("regdate"));
+				notice.setHit(rs.getInt("hit"));
 				
 				noticeArray.add(notice);
 			}
@@ -77,32 +78,39 @@ public class NoticeDAO {
 		return noticeArray;
 	}
 	
-	//게시물 1건 가져오기(상세보기)
 	public Notice select(int notice_id) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		con = dbManager.getConnection();
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Notice notice=null; //rs대신 데이터 1건을 담을 객체 
 		
-		Notice notice = null;
+		String sql="select * from notice where notice_id=?";
 		
-		String sql = "select * from notice where notice_id = ?";
+		con=dbManager.getConnection(); //접속객체 얻기 
 		try {
-			pstmt = con.prepareStatement(sql);//쿼리 준비
-			pstmt.setInt(1, notice_id);//바인드 변수값 지정
+			pstmt=con.prepareStatement(sql); //쿼리준비
+			pstmt.setInt(1, notice_id); //바인드 변수값 지정
+			rs=pstmt.executeQuery();
 			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				notice = new Notice();
+			//지금 탄생한 rs는 곧 죽는다..따라서  rs를 대체할 객체가 필요하다!!
+			//rs 는 레코드 한건을 담는 객체이므로, 레코드 1건을 담아전달용으로 사용되는 VO를 이용하자!!
+			if(rs.next()) {//레코드가 존재하는 것임!! 따라서 이때 VO를 올리자!!!!!!
+				notice = new Notice(); //텅빈 empty상태의 vo 생성
+				//notice에  rs 의 정보를 모두~~~옮겨심자!!!
 				notice.setNotice_id(rs.getInt("notice_id"));
 				notice.setAuthor(rs.getString("author"));
 				notice.setTitle(rs.getString("title"));
 				notice.setContent(rs.getString("content"));
 				notice.setRegdate(rs.getString("regdate"));
 				notice.setHit(rs.getInt("hit"));
-				
 			}
+			
+			//조회수 증가 
+			sql="update notice set hit=hit+1 where notice_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, notice_id);
+			pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
