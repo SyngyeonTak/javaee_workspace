@@ -41,7 +41,7 @@ public class ImageBoardDAO {
 		Connection con = dbManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int result = 0;
+		
 		String sql = "select * from imageboard";
 		ArrayList<ImageBoard> list = new ArrayList<ImageBoard>();
 		
@@ -96,6 +96,10 @@ public class ImageBoardDAO {
 				
 			}
 			
+			pstmt = con.prepareStatement("update imageboard set hit = hit+1 where board_id = ?");
+			pstmt.setInt(1, board_id);
+			pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -112,13 +116,14 @@ public class ImageBoardDAO {
 		PreparedStatement pstmt = null;
 
 		int result = 0;
-		String sql = "update imageboard set author = ?, title = ?, content = ? where board_id = ?";
+		String sql = "update imageboard set author = ?, title = ?, content = ?, filename= ? where board_id = ?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, board.getAuthor());
 			pstmt.setString(2, board.getTitle());
 			pstmt.setString(3, board.getContent());
-			pstmt.setInt(4, board.getBoard_id());
+			pstmt.setString(4, board.getFilename());
+			pstmt.setInt(5, board.getBoard_id());
 			
 			result = pstmt.executeUpdate();
 			
