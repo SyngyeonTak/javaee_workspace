@@ -13,6 +13,30 @@
 
 	QnADAO dao= new QnADAO();
 	List<QnA> list = dao.selectAll();
+	int totalRecord = list.size();
+	int pageSize = 10;
+	int totalPage = (int)(Math.ceil((float)totalRecord/pageSize));
+	
+	int currentPage = 1;
+	if(request.getParameter("currentPage")!=null){
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	}
+	
+	int blockSize = 10;
+	int firstPage = currentPage - (currentPage-1)%blockSize;
+	int lastPage = firstPage + (blockSize-1);
+	int num = totalRecord-(currentPage-1)*pageSize;
+	int curPos =  (currentPage-1)*pageSize;
+	
+	out.print("totalRecord는 "+totalRecord+"<br>");
+	out.print("currentPage는 "+currentPage+"<br>");
+	out.print("pageSize는 "+pageSize+"<br>");
+	out.print("totalPage는 "+totalPage+"<br>");
+	out.print("firstPage는 "+firstPage+"<br>");
+	out.print("lastPage는 "+lastPage+"<br>");
+	out.print("num는 "+num+"<br>");
+	out.print("curPos는 "+curPos+"<br>");
+	
 	
 %>
 <!DOCTYPE html>
@@ -35,13 +59,24 @@ th, td {
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+img{
+	box-sizing:border-box;
+}
+a{
+	text-decoration: none;
+}
+.pageNum{
+	font-size:20pt;
+	color:red;
+	font-weight:bold;	
+}
 </style>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(function(){
 		$("button").on("click", function(){
-			location.href="/board/regist_form.jsp";
+			location.href="/qna/regist_form.jsp";
 		});
 	});//onload
 </script>
@@ -57,18 +92,46 @@ tr:nth-child(even) {
     <th>등록일</th>
     <th>조회수</th>
   </tr>
-  	<%for(int i = 0; i< list.size(); i++){%>
-  <tr><% QnA qna = list.get(i); %>
-    <td><%=qna.getQna_id()%></td>
-    <td>
-		<a href = "/qna/detail_form.jsp?qna_id=<%=qna.getQna_id()%>"><%=qna.getTitle()%></a>
-	</td>
-    <td><%=qna.getWriter()%></td>
-    <td><%=qna.getRegdate()%></td>
-    <td><%=qna.getHit()%></td>
-  </tr>
+  	<%for(int i = 0; i< pageSize; i++){%>
+  	<% if(curPos >= list.size()) break; %>
+  	<% QnA qna = list.get(curPos++);%>
   <tr>
+    <td><%=num--%></td>
+    <td>
+    	<%if(qna.getDepth() > 0){ %>
+    		<img src ="/images/reply.png" style = "margin-left: <%=10*qna.getDepth() %>px" width="15px">
+    	<%} %>
+    	<a href = "/qna/detail_form.jsp?qna_id=<%=qna.getQna_id()%>"><%=qna.getTitle() %></a>
+    </td>
+    <td><%=qna.getWriter() %></td>
+    <td><%=qna.getRegdate().substring(0, 10) %></td>
+    <td><%=qna.getHit() %></td>
+  </tr>
   <%}%>
+
+  <tr> 
+	<td colspan = "5" style = "text-align:center">
+	
+		<%if(firstPage > 1){ %>
+			<a href = "/qna/list.jsp?currentPage=<%=firstPage-1 %>" >◀</a>		
+		<%}else{ %>
+			<a href ="javascript:alert('처음 페이지입니다.')">◀</a>
+		<%} %>
+		
+		<%for(int i =firstPage; i<=lastPage;i++){ %>
+			<%if(i >totalPage) break; %>
+			<a href = "/qna/list.jsp?currentPage=<%=i %>" <%if(i == currentPage) {%>class = "pageNum"<%} %>>[<%=i %>]</a>
+		<%} %>
+		
+		<%if(lastPage < totalPage ){ %>
+			<a href = "/qna/list.jsp?currentPage=<%=lastPage+1 %>" >▶</a>					
+		<%}else{ %>
+			<a href ="javascript:alert('마지막 페이지입니다.')">▶</a>
+		<%} %>
+		
+	</td>
+  </tr>
+  <tr> 
 	<td colspan = "5">
 		<button>글 등록</button>
 	</td>
