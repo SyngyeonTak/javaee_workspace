@@ -28,6 +28,7 @@
 	int num = totalRecord-(currentPage-1)*pageSize;
 	int curPos =  (currentPage-1)*pageSize;
 	
+	/*
 	out.print("totalRecord는 "+totalRecord+"<br>");
 	out.print("currentPage는 "+currentPage+"<br>");
 	out.print("pageSize는 "+pageSize+"<br>");
@@ -36,7 +37,7 @@
 	out.print("lastPage는 "+lastPage+"<br>");
 	out.print("num는 "+num+"<br>");
 	out.print("curPos는 "+curPos+"<br>");
-	
+	*/
 	
 %>
 <!DOCTYPE html>
@@ -92,9 +93,26 @@ a{
     <th>등록일</th>
     <th>조회수</th>
   </tr>
+  	<%int cnt = 0; %>
   	<%for(int i = 0; i< pageSize; i++){%>
   	<% if(curPos >= list.size()) break; %>
   	<% QnA qna = list.get(curPos++);%>
+  	
+  	<%if(qna.getRank() > 0) { %>
+  		<%cnt = cnt+1; %>
+  	<%}else{ %>
+  		<%cnt = 0; %>
+  	<%} %>
+  	<%if(cnt != qna.getRank()) {%>
+  		<tr>
+  			<td></td>
+  			<td>●삭제 되었습니다.</td>
+  			<td>카운트=<%=cnt %></td>
+  			<td>getRank=<%=qna.getRank() %></td>
+  			<td></td>
+  		</tr>
+  		<%cnt=qna.getRank(); %>
+  	<%} %>
   <tr>
     <td><%=num--%></td>
     <td>
