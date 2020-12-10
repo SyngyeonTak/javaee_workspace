@@ -82,9 +82,42 @@ public class CommentsDAO {
 		
 		return result;
 	}
-	public int delete() {
+	public int delete(int comments_id) {
+		Connection con = dbManager.getConnection();
+		PreparedStatement pstmt = null;
+		
 		int result = 0;
+		
+		String sql = "delete from comments where comments_id = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, comments_id);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dbManager.release(con, pstmt);
+		}
+		
 		
 		return result;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

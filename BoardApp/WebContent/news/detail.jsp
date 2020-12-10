@@ -37,11 +37,11 @@ textarea {
 	height: 150px;
 }
 input[name ='msg']{
-	width:70%;
+	width:65%;
 }
 
 input[name ='author']{
-	width:20%;
+	width:15%;
 }
 
 p{
@@ -49,17 +49,21 @@ p{
 }
 
 .msg{
-	width:70%
+	width:65%
 }
 .author{
 	width:10%
 }
 .cdate{
-	width:18%
+	width:13%
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+	var author;
+	var msg;
+	var cdate;
+
 	$(function() {
 		$($("button")[0]).click(function() {//수정
 			if(confirm("수정하시겠습니까?")){
@@ -80,8 +84,109 @@ p{
 		$($("button")[3]).click(function() {//댓글 등록
 			reply();
 		});
-
+		
+		$($("button")[4]).click(function() {//비동기 방식의 댓글 등록
+			asyncReply();
+		});
+		//댓글 목록 가져오기!!
+		asyncList();
 	});
+	
+	//비동기로 목록 가져오기!!
+	function asyncList(){
+		var xhttp = new XMLHttpRequest(); //비동기 통신 객체
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				getList(this.responseText);//코멘트 리스트 동적 출력
+			
+			}
+		};
+		xhttp.open("get", "/news/asynclist.jsp?news_id=<%=news_id%>", true);
+		
+		xhttp.send();	
+	}
+	
+	function asyncReply(){
+		var xhttp = new XMLHttpRequest(); //비동기 통신 객체
+		/*
+		0: request not initialized : 요청준비도 않된상태
+		1: server connection established : 서버와 네트워크 연결이 된 상태 
+		2: request received : 요청이 서버에 도달함
+		3: processing request : 서버가 요청을 처리중...
+		4: request finished and response is ready : 요청처리가 완료, 응답을 받는 단계
+		*/
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				//alert(this.responseText);
+				
+				//전체화면 갱신이 아닌, 부분화면 갱신...(새로고침이 되지 않음)
+				//SPA==Single Page Application
+				
+				//최신 댓글목록 가져오기
+				
+				getList(this.responseText);//코멘트 리스트 동적 출력
+			}
+		};
+		author=$("input[name='author']").val();
+		msg=$("input[name='msg']").val();
+	
+		
+		var params="news_id=<%=news_id%>&author="+author+"&msg="+msg;
+		
+		xhttp.open("post", "/news/asyncreply.jsp", true);
+		//반드시 open()메서드로  post 를 지정한 후에나 아래의 post 속성이 지정이 가능
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send(params);	
+	}
+	
+	function getList(data){
+		//alert(data);//서버로부터 응답받은 데이터를 alert
+		//json을 파싱하자!!!
+		var commentBox = document.getElementById("commentBox");
+		commentBox.innerHTML = "";//기존 데이터 삭제!!!
+		
+		var tag = "";//div가 누적될 변수
+		
+		var json = JSON.parse(data);//파싱을 하게된면, 그 결과로 반환되는 결과물은 객체가 된다..
+									//따라서 이 시점부터는 문자열에 불과했던 데이터를 객체처럼 접근하여 사용할 수 있다.
+		if(json.resultCode==0){
+			//alert("등록실패 ㅜㅜ");
+		}else{
+			var jsonArray = json.commentsList;//배열을 반환
+			//alert("현재까지 등록된 댓글의 수는 "+jsonArray.length);
+			for (var i = 0; i < jsonArray.length; i++) {
+				var comments = jsonArray[i];
+				tag += "<div>";
+				tag += "<p class = \"msg\">"+comments.msg+"</p>";
+				tag += "<p class = \"author\">"+comments.author+"</p>";
+				tag += "<p class = \"cdate\">"+comments.cdate+"</p>";
+				tag += "<p class = \"del\"><button type = \"button\" onClick=\"delComments("+comments.comments_id+")\">삭제</button></p>";
+				tag += "</div>"
+			}
+		}
+		commentBox.innerHTML = tag;
+		
+	}
+	
+	//코멘트 삭제
+	function delComments(comments_id){
+		var ans =	confirm(comments_id+"를 삭제하길 원해?")
+		if(ans){
+			//삭제 후(비동기), 리스트 가져오기(비동기)
+			var xhttp = new XMLHttpRequest(); //비동기 통신 객체
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					if(this.responseText==0){
+						alert("삭제 실패");
+					}else{
+						asyncList();					
+					}
+				}
+			};
+			xhttp.open("get", "/news/asyncdelete.jsp?comments_id="+comments_id, true);
+			xhttp.send();
+		}
+	}
 	
 	function update(){
 		$("form").attr({
@@ -157,21 +262,14 @@ p{
 						<input type = "text" placeholder = "댓글을 입력"  name = "msg">
 						<input type = "text" placeholder = "작성자 입력"  name = "author">
 						<button type = "button">등록</button>
+						<button type = "button">비동기 등록</button>
 					</div>
 				</td>
 			</tr>
 			<!-- 댓글 리스트 영역 -->
-			<%for(Comments comments : list){ %>
-				<tr>
-					<td>
-						<div>
-							<p class = "msg"><%=comments.getMsg() %></p>
-							<p class = "author"><%=comments.getAuthor() %></p>
-							<p class = "cdate"><%=comments.getCdate().substring(0, 10) %></p>
-						</div>
-					</td>
+				<tr >
+					<td id ="commentBox"></td>
 				</tr>
-			<%} %>
 		</table>
 	</form>
 </body>
