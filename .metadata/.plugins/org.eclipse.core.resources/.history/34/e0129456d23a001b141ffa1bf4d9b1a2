@@ -1,0 +1,6 @@
+<%@ page contentType="text/html;charset=utf-8"%>
+
+<%
+	String comments_id = request.getParameter("comments_id");
+	out.print(comments_id+"삭제되니?");
+%>

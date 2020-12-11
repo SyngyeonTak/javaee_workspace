@@ -1,3 +1,18 @@
 1606956542668	Move 'index.html' to 'WebContent'
 1606959775911	Delete element
 1606959811747	Copy compilation unit
+1607046049501	Move 'index.html' to 'board'
+1607047299636	Move 'index.jsp' to 'WebContent'
+1607049771728	Delete element
+1607056964115	Copy folder
+1607058288708	Delete element
+1607060430231	Delete elements
+1607062545243	Copy files
+1607065630606	Rename type 'ImageBoard'
+1607065641395	Rename type 'imageBoard'
+1607065647554	Rename type 'imageBoardDAO'
+1607067574646	Delete elements
+1607068080018	Delete elements
+1607069746403	Copy folder
+1607070329316	Delete element
+1607071986413	Copy file

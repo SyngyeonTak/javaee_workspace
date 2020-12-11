@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.config.DeptMapper">
+	
+	<!--
+	개발자는 mybatis를 이용할 경우 자바코드에서 쿼리문을 작성하지 않으며
+	수많은 jdbc 관련 코드 또한 작성할 필요가 없고, 오직 쿼리문에만 집중하면 된다!!
+	-->
+
+	<!--모든 글 가져오기 -->
+	<select id="selectAll" resultType="emp.model.Dept">
+		select * from dept order by deptno asc
+	</select>
+	
+	<!-- 한 건 가져오기 -->
+	<!-- mybatis는 sql문과 vo과의 자동 매핑을 해준다 -->
+	<select id="select" resultType="emp.model.Dept" parameterType="int">
+		select * from dept where deptno = #{deptno}
+	</select>
+
+	<!-- 한 건 수정하기 -->
+	<!-- 파라미터 타입을 vo로 해야한다. -->
+	<update id="update" parameterType="emp.model.Dept">
+		update dept set dname = #{dname}, loc = #{loc} where deptno = #{deptno}
+	</update>
+
+</mapper>

@@ -1,0 +1,32 @@
+<%@page import="board.model.Comments"%>
+<%@page import="java.util.List"%>
+<%@page import="board.model.CommentsDAO"%>
+<%@ page contentType="text/html;charset=utf-8"%>
+<%
+	request.setCharacterEncoding("utf-8");
+%>
+<jsp:useBean id="comments" class = "board.model.Comments"/>
+<jsp:setProperty property="*" name="comments"/>
+<%
+	CommentsDAO dao = new CommentsDAO();
+	int result = dao.insert(comments);
+	
+	StringBuilder sb = new StringBuilder();
+	
+	if(result == 0){
+		
+	}else{
+		List<Comments> list = dao.selectAll(comments.getNews_id());
+	}
+	
+	out.print(sb);
+%>
+
+
+
+
+
+
+
+
+

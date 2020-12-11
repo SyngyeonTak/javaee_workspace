@@ -1,0 +1,42 @@
+package board.model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import db.DBManager;
+
+public class CommentsDAO {
+	DBManager dbManager = new DBManager();
+	
+	public int insert(Comments comments) {
+		Connection con = dbManager.getConnection();
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		
+		String sql = "";
+		
+		
+		return result;
+	}
+	public int select() {
+		int result = 0;
+		
+		return result;
+	}
+	public int selectAll() {
+		int result = 0;
+		
+		return result;
+	}
+	public int update() {
+		int result = 0;
+		
+		return result;
+	}
+	public int delete() {
+		int result = 0;
+		
+		return result;
+	}
+}

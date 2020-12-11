@@ -1,0 +1,49 @@
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="java.util.List"%>
+<%@page import="java.io.File"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@ page contentType="text/html;charset=utf-8"%>
+
+<%!
+	String saveDir = "C:/study/ETC/academy/workspace/javaee_workspace/BoardApp/WebContent/data/";
+	int maxSize = 2 * 1024 * 1024;
+%>
+
+<%
+	DiskFileItemFactory itemFactory = new DiskFileItemFactory();
+	itemFactory.setRepository(new File(saveDir));
+	itemFactory.setSizeThreshold(maxSize);
+	itemFactory.setDefaultCharset("utf-8");
+
+	ServletFileUpload upload = new ServletFileUpload(itemFactory);
+	
+	List<FileItem> items = upload.parseRequest(request);
+	
+	for(FileItem item : items){
+		if(item.isFormField()){
+			if(item.getFieldName().equals("board_id")){
+				dfdf
+			}else if{
+				
+			}
+			
+			
+		}
+	}
+	
+%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

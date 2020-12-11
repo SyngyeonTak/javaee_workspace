@@ -1,0 +1,14 @@
+<%@page import="board.model.NewsDAO"%>
+<%@ page contentType="text/html;charset=utf-8"%>
+<%@ include file="/inc/lib.jsp" %>
+<%
+	int news_id = Integer.parseInt(request.getParameter("news_id"));
+	NewsDAO dao = new NewsDAO();
+	int result = dao.replace(news_id);
+	
+	if(result == 0){
+		out.print(getMsgBack("삭제완료"));
+	}else{
+		out.print(getMsgURL("삭제완료", "list.jsp"));
+	}
+%>

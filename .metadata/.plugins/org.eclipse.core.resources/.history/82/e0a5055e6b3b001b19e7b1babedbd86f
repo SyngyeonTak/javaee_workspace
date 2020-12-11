@@ -1,0 +1,7 @@
+package board.model;
+
+public class BoardDAO {
+	public int insert() {
+		int result = 0;
+	}
+}

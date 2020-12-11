@@ -1,0 +1,13 @@
+/*
+ * 강아지의 인스턴스를 오직 1개만 만들도록 조치하기!!
+*/
+
+package test;
+
+public class Dog {
+	String name = "바둑이";
+	
+	private static Dog() {
+		
+	}
+}

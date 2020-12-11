@@ -1,0 +1,21 @@
+<%@page import="board.model.ImageBoardDAO"%>
+<%@page import="board.model.ImageBoard"%>
+<%@ page contentType="text/html;charset=utf-8"%>
+<%@ include file="/inc/lib.jsp" %>
+<%
+
+	int board_id = Integer.parseInt(request.getParameter("board_id"));
+
+		
+	ImageBoardDAO dao = new ImageBoardDAO();
+	
+	int result = dao.delete(board_id);
+	
+	if(result == 0){
+		out.print(getMsgBack("삭제실패"));
+	}else{
+		out.print(getMsgURL("수정성공", "/imageboard/detail_form.jsp?board_id="+board.getBoard_id()));		
+	}
+
+
+%>

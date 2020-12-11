@@ -1,0 +1,16 @@
+package board.model;
+
+import java.sql.Connection;
+
+import db.DBManager;
+
+public class BoardDAO {
+	public int insert() {
+		Connection con = null;
+		int result = 0;
+		
+		con =
+		
+		return result;
+	}
+}

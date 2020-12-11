@@ -1,0 +1,13 @@
+<%@page import="board.model.NewsDAO"%>
+<%@ page contentType="text/html;charset=utf-8"%>
+<%
+	int news_id = Integer.parseInt(request.getParameter("news_id"));
+	NewsDAO dao = new NewsDAO();
+	int result = dao.replace(news_id);
+	
+	if(result == 0){
+		
+	}else{
+		
+	}
+%>

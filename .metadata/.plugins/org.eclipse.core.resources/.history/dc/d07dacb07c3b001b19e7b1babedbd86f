@@ -1,0 +1,41 @@
+package board.model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.sun.javafx.logging.PulseLogger;
+
+import common.db.PoolManager;
+
+public class BoardDAO {
+	PoolManager pool = new PoolManager();
+	
+	public int insert(Board board) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+			
+		String sql = "insert into board(board_id, title, writer, content) values(seq_board.nextVal, ?, ?, ?)";
+		con = pool.getConnection();
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		return result;
+	}
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+<%@page import="board.model.Comments"%>
+<%@page import="java.util.List"%>
+<%@page import="board.model.CommentsDAO"%>
+<%@ page contentType="text/html;charset=utf-8"%>
+<%
+	int news_id = Integer.parseInt(request.getParameter("news_id"));
+	CommentsDAO dao = new CommentsDAO();
+	List<Comments> list= dao.selectAll(news_id);
+	
+	
+	
+%>

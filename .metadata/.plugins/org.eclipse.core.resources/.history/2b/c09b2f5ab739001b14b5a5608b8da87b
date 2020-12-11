@@ -1,0 +1,33 @@
+package board.model;
+
+import db.DBManager;
+
+public class CommentsDAO {
+	DBManager dbManager = new DBManager();
+	
+	public int insert() {
+		int result = 0;
+		
+		return result;
+	}
+	public int select() {
+		int result = 0;
+		
+		return result;
+	}
+	public int selectAll() {
+		int result = 0;
+		
+		return result;
+	}
+	public int update() {
+		int result = 0;
+		
+		return result;
+	}
+	public int delete() {
+		int result = 0;
+		
+		return result;
+	}
+}

@@ -1,0 +1,12 @@
+<%@page import="board.model.NewsDAO"%>
+<%@ page contentType="text/html;charset=utf-8"%>
+<%@ include file="/inc/lib.jsp"%>
+<%
+	request.setCharacterEncoding("utf-8")
+%>
+<jsp:useBean id="news" class="board.model.News"></jsp:useBean>
+<jsp:setProperty property="*" name="news" />
+<%
+	NewsDAO dao = new NewsDAO();
+	dao.update(news);
+%>
