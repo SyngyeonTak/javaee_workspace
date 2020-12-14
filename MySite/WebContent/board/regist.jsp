@@ -1,3 +1,4 @@
+<%@page import="board.model.MybatisBoardDAO"%>
 <%@page import="board.model.BoardDAO"%>
 <%@page import="common.file.FileManager"%>
 <%@page import="board.model.Board"%>
@@ -33,7 +34,7 @@
 	 List<FileItem> items = upload.parseRequest(request);
 	 
 	 Board board = new Board();
-	 BoardDAO dao = new BoardDAO();
+	 MybatisBoardDAO dao = new MybatisBoardDAO();
 	 
 	 boolean flag= false;//업로드가 완료되었는지 여부를 알 수 있는 변수 선언
 	 

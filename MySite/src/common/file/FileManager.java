@@ -4,6 +4,8 @@
 
 package common.file;
 
+import java.io.File;
+
 public class FileManager {
 	//확장자만 추출하기
 
@@ -13,6 +15,11 @@ public class FileManager {
 		return ext;
 	}
 	
+	public static boolean deleteFile(String path) {
+		File file = new File(path);
+		
+		return file.delete();
+	}
 }
 
 

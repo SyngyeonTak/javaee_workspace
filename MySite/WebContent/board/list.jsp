@@ -1,27 +1,17 @@
+<%@page import="board.model.MybatisBoardDAO"%>
+<%@page import="common.board.Pager"%>
 <%@page import="java.util.List"%>
 <%@page import="board.model.Board"%>
 <%@page import="board.model.BoardDAO"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 
 <%
-	BoardDAO dao = new BoardDAO();
+	MybatisBoardDAO dao = new MybatisBoardDAO();
 	List<Board> list = dao.selectAll();
-
-	int totalRecord = list.size();
-	int currentPage = 1;
-	if(request.getParameter("currentPage") != null){
-		currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	}
-	int pageSize = 10;
-	int totalPage = (int)Math.ceil((float)totalRecord/pageSize);
-
-	int blockSize = 10;
-	int firstPage = currentPage - (currentPage-1)%blockSize;
-	int lastPage = firstPage + (blockSize-1);
-	int curPos = (currentPage-1)*pageSize;
-	int num = totalRecord - curPos;
 	
-	String realPath = application.getRealPath("/data");
+	Pager pager = new Pager();
+	pager.init(request, list);//페이지 처리에 대한 계산!!
+	//쓰는 톰캣이 내부 톰캣이라 이클립스 내부 데이터에 쌓이다.	 내부 톰캣은 시뮬레이션이다.
 %>
 
 
@@ -67,14 +57,17 @@ a{
 			<th>등록일</th>
 			<th>조회수</th>
 		</tr>
-		
-		<%for(int i = 0; i<pageSize; i++) {%>
+		<%
+			int num=pager.getNum();
+			int curPos=pager.getCurPos();
+		%>
+		<%for(int i = 0; i<pager.getPageSize(); i++) {%>
 			<%if(num <1) break; %>
 			<% Board board = list.get(curPos++); %>
 			<tr>
 				<td><%=num-- %></td>
-				<td><img src = "<%=realPath %>/<%=board.getFilename() %>" width = "15px"/></td>
-				<td><%=board.getTitle() %></td>
+				<td><img src = "/data/<%=board.getFilename() %>" width = "15px"/></td>
+				<td><a href="/board/detail.jsp?board_id=<%=board.getBoard_id()%>"><%=board.getTitle() %></a></td>
 				<td><%=board.getWriter() %></td>
 				<td><%=board.getRegdate() %></td>
 				<td><%=board.getHit() %></td>
@@ -82,19 +75,19 @@ a{
 		<%} %>
 		<tr>
 			<td colspan="6" style = "text-align:center;">
-				<%if(firstPage > 1) {%>
-					<a href ="list.jsp?currentPage=<%=firstPage-1%>">◀</a>
+				<%if(pager.getFirstPage() > 1) {%>
+					<a href ="list.jsp?currentPage=<%=pager.getFirstPage()-1%>">◀</a>
 				<%}else{ %>
 					<a href ="javascript:alert('처음 페이지 입니다.')">◀</a>
 				<%} %>
 			
-				<%for(int i=firstPage; i<=lastPage; i++){ %>
-					<%if(i > totalPage) break; %>
-					<a href = "list.jsp?currentPage=<%=i%>" <%if(i == currentPage){ %>class = "pageNum" <%} %>>[<%=i%>]</a>
+				<%for(int i=pager.getFirstPage(); i<=pager.getLastPage(); i++){ %>
+					<%if(i > pager.getTotalPage()) break; %>
+					<a href = "list.jsp?currentPage=<%=i%>" <%if(i == pager.getCurrentPage()){ %>class = "pageNum" <%} %>>[<%=i%>]</a>
 				<%} %>
 				
-				<%if(lastPage < totalPage) {%>
-					<a href ="list.jsp?currentPage=<%=lastPage+1%>">▶</a>
+				<%if(pager.getLastPage() < pager.getTotalPage()) {%>
+					<a href ="list.jsp?currentPage=<%=pager.getLastPage()+1%>">▶</a>
 				<%}else{ %>
 					<a href ="javascript:alert('마지막 페이지 입니다.')">▶</a>
 				<%} %>
