@@ -1,9 +1,12 @@
 <%@page import="admin.member.Admin"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%
-	Admin admin = (Admin)request.getAttribute("admin");
-	String mid = admin.getMid();
-	String password = admin.getPassword();
+	Admin admin = (Admin)session.getAttribute("ad");
+	
+	//만일 admin VO가 null이면? 인증을 거치지 않거나 세션이 만료된 상황이므로, 현재 페이지에 대한 
+	//접근 자체를 막아야 한다.
+	if(admin != null){
+		
 %>
 <!DOCTYPE html>
 <html>
@@ -12,7 +15,10 @@
 <%@ include file="/admin/inc/head.jsp"%>
 </head>
 <body>
-<div><%=mid%>님 로그인 중입니다.</div>
+<div>
+	<%=admin.getMid()%>님 로그인 중입니다.
+	<a href = "/admin/logout.jsp">로그아웃</a>
+</div>
 <%@ include file="/admin/inc/topnavi.jsp" %>
 
 	<div style="padding-left: 16px">
@@ -22,3 +28,17 @@
 
 </body>
 </html>
+<%}else{%>
+	<script>
+		alert("올바르지 않은 접근입니다.");
+		history.back();
+	</script>	
+<%}%>
+
+
+
+
+
+
+
+

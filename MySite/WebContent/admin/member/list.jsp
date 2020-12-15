@@ -1,4 +1,10 @@
+<%@page import="admin.member.Admin"%>
 <%@ page contentType="text/html;charset=utf-8"%>
+<%
+	//브라우저 브로세스를 종료하지 않았다면 여전히 기존 세션을 사용할 수 있다.
+	Admin admin = (Admin)session.getAttribute("ad");
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,6 +57,10 @@ tr:nth-child(even) {
 </style>
 </head>
 <body>
+<div>
+	<%=admin.getMid()%>님 로그인 중입니다.
+	<a href = "/admin/logout.jsp">로그아웃</a>
+</div>
 <%@ include file="/admin/inc/topnavi.jsp" %>
 
 <h2>회원목록</h2>
