@@ -1,0 +1,37 @@
+/*
+ * javaEE 개발 패턴 중 mvc패턴을 적용한 개발방법을 가리켜 model2방식이라 일컫는다.
+ * 특히 jsp가 디자인에 사용되고 있으므로, 웹상의 요청을 받고 응답이 가능한 서블릿이 컨트롤러로서
+ * 역할을 수행하게 된다..
+ * */
+
+package com.webapp1216.board.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.webapp1216.board.model.NoticeDAO;
+
+public class ListServlet extends HttpServlet{
+	NoticeDAO dao = new NoticeDAO();
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+

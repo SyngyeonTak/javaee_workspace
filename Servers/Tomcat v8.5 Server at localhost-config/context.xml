@@ -16,4 +16,7 @@
 	<WatchedResource>WEB-INF/web.xml</WatchedResource>
 	<WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
 	<ResourceLink type="javax.sql.DataSource" name="jdbc/myoracle" global="jdbc/myoracle" />
+	<ResourceLink type="javax.sql.DataSource"
+                      name="jdbc/mysql"
+                      global="jdbc/mysql" />
 </Context>

@@ -1,0 +1,30 @@
+/*
+ * jsp만으로 개발했던 방식에서 regist.jsp가 담당하는 업무를
+ * 서블릿으로 구현해본다!!
+ * */
+package board.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class RegistServlet extends HttpServlet{
+	//클라이언트가 get을 요청 : doGet(), post 요청: doPost()
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

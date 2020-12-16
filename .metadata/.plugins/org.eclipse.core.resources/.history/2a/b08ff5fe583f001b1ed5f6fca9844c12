@@ -1,0 +1,49 @@
+package com.webapp1216.board.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.webapp1216.mybatis.config.MybatisConfigManager;
+
+public class NoticeDAO {
+	//CRUD
+	MybatisConfigManager configManager = MybatisConfigManager.getInstance();//singleTon °´Ã¼ ¾ò±â
+	
+	public int insert(Notice notice) {
+		int result = 0;
+		SqlSession sqlSession= configManager.getSqlSession();
+		result = sqlSession.insert("com.webapp1216.board.model.Board.insert", notice);
+		sqlSession.commit();
+		configManager.close(sqlSession);
+		
+		return result;
+	}
+	
+	public Notice select(int board_id) {
+		Notice notice =null;
+		
+		return notice;
+	}
+	
+	public List<Notice> selectAll(){
+		List<Notice> list = null;
+		
+		return list;
+		
+	}
+	
+	public int delete(int board_id) {
+		int result = 0;
+		
+		return result;
+	}
+	
+	public int update(Notice notice) {
+		int result =0;
+		
+		return result;
+	}
+	
+}

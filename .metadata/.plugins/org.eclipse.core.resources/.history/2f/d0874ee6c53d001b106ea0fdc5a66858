@@ -1,0 +1,38 @@
+//설정파일을 읽어들여, 팩토리를 생성하고 쿼리문 수행에 필요한 SqlSession 객체를 반환해주는 객체
+package mybatis.config;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+public class MybatisConfigManager {
+	String resource = "mybatis/config/config.xml";
+	InputStream inputStream;
+	SqlSessionFactory sqlSessionFactory;
+
+	public MybatisConfigManager() {
+		
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	//SqlSession을 반환하는 메서드(쿼리문을 수행하고 싶은 자가 호출함)
+	public SqlSession getSqlSession() {
+		SqlSession sqlSession =null;
+		sqlSession = sqlSessionFactory.openSession();
+		return sqlSession;
+	}
+}
+
+
+
+
+

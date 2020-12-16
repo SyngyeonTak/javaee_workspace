@@ -1,0 +1,32 @@
+/*
+	기존 전통적인 JDBC방식으로 작성했던 DAO의 CRUD 메서드를 mybatis 프레임워크를 이용
+	하여 코드를 간략화 시켜보자
+*/
+
+package board.model;
+
+import org.apache.ibatis.session.SqlSession;
+
+import mybatis.config.MybatisConfigManager;
+
+public class MybatisBoardDAO {
+	MybatisConfigManager configManger =MybatisConfigManager.getInstance();
+	
+	public int insert(Board board) {
+		int result = 0;
+		SqlSession sqlSession = configManger.getSqlSession();
+		
+		return result;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+

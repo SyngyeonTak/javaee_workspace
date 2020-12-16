@@ -1,0 +1,11 @@
+//설정파일을 읽어들여, 팩토리를 생성하고 쿼리문 수행에 필요한 SqlSession 객체를 반환해주는 객체
+package mybatis.config;
+
+public class MybatisConfigManager {
+	public MybatisConfigManager() {
+		String resource = "org/mybatis/example/mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+	
+	}
+}
