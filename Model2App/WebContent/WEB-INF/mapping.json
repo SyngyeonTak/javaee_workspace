@@ -1,0 +1,15 @@
+{
+	"controller":{
+		"/test.do":"com.model2.test.TestController",
+		"/notice/list.do":"com.model2.notice.controller.ListController",
+		"/notice/regist.do":"com.model2.notice.controller.RegistController"
+		"/notice/detail.do":"com.model2.notice.controller.DetailController"
+	}
+	
+	"view":{
+		"/result/test":"/test/result.jsp",
+		"/result/notice/list":"/notice/list.jsp",
+		"/result/notice/regist":"/notice/list.do"
+		"/result/notice/detail":"/notice/detail.jsp"
+	}
+}
