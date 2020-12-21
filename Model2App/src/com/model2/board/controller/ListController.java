@@ -1,31 +1,31 @@
-package com.model2.notice.controller;
+
+package com.model2.board.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.model2.Controller;
-import com.model2.domain.Notice;
-import com.model2.notice.model.NoticeDAO;
+import com.model2.board.model.BoardDAO;
 
-public class DetailController implements Controller{
-	NoticeDAO dao = new NoticeDAO();
-	
+public class ListController implements Controller{
+	BoardDAO dao = new BoardDAO();
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int notice_id = Integer.parseInt(request.getParameter("notice_id"));
-		Notice notice = new Notice();
-		notice = dao.select(notice_id);
 		
-		request.setAttribute("notice", notice);
+		//3단계: 알맞는 로직 객체에 일 시키기
+		List list = dao.selectAll();
 		
+		request.setAttribute("boardList", list);
 	}
 
 	@Override
 	public String getResultView() {
-		return "/result/notice/detail";
+		
+		return "/result/board/list";
 	}
 
 	@Override

@@ -87,7 +87,8 @@ public class DispatcherServlet extends HttpServlet{
 			Class controllerClass =  Class.forName(className);//문자열로 지정한 클래스에 대한 실제 클래스를 반환한다..
 			controller = (Controller)controllerClass.newInstance();//지정한 클래스의 인스턴스를 반환한다.
 			controller.execute(request, response);
-			resultPath = (String)viewMap.get(controller.getResultView());
+			String resultView = controller.getResultView();
+			resultPath = (String)viewMap.get(resultView);
 			//응답 시 sendRedirect 로 처리해야 할 경우가 있고, 글 작성 후 리스트, 전혀 다른 페이지로 재접속을 유도할 때
 			if(controller.isForward()){
 				//때로는 forwarding 처리해야 할 경우가 있다..

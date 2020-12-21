@@ -33,4 +33,10 @@ public class TestController implements Controller{
 		return "/result/test";//외부 데이터 환경
 	}
 
+	@Override
+	public boolean isForward() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

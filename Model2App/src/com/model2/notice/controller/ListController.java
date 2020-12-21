@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.model2.Controller;
-import com.model2.notice.domain.Notice;
+import com.model2.domain.Notice;
 import com.model2.notice.model.NoticeDAO;
 
 public class ListController implements Controller{
